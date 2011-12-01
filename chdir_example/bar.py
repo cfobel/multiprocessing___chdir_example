@@ -1,6 +1,8 @@
 from time import sleep
 import multiprocessing
 
+from path import path
+
 
 class BarChild(object):
     STATES = dict(RUNNING=10, STOPPED=20)
@@ -57,3 +59,19 @@ class Bar(object):
         if self.child:
             self.child.join()
         self.child = None
+
+
+here = path(__file__).abspath()
+
+
+if __name__ == '__main__':
+    import os
+    import sys
+
+    sys.path.append(here.parent)
+    os.chdir(here.parent)
+
+    b = Bar('hello')
+    b.start()
+    sleep(3)
+    b.stop()
